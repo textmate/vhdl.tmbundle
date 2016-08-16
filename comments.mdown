@@ -5,7 +5,6 @@
 * "Symbol List - Process" scope is too broad.
 * All snippets should use actual tabs for indentation, they will be converted to the users preference automatically when inserted.
 * The two instantiate commands should be title cased (See style guide).
-* "vhdl template" perhaps a bit generic (in name)? Should also be title cased.
 * Several keywords should likely be storage.type
 * punctuation.verilog needs expansion.
 * keyword.language isn't valid.

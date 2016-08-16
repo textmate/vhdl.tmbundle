@@ -19,7 +19,7 @@ begin
 
 end architecture ; -- ${2:arch}</string>
 	<key>name</key>
-	<string>vhdl template</string>
+	<string>Insert Template</string>
 	<key>scope</key>
 	<string>source.vhdl</string>
 	<key>tabTrigger</key>
