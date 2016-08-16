@@ -129,15 +129,23 @@ sub findentity {
 	<string>word</string>
 	<key>input</key>
 	<string>selection</string>
+	<key>inputFormat</key>
+	<string>text</string>
 	<key>keyEquivalent</key>
 	<string>@\</string>
 	<key>name</key>
-	<string>instantiate entity</string>
-	<key>output</key>
-	<string>insertAsSnippet</string>
+	<string>Instantiate Entity</string>
+	<key>outputCaret</key>
+	<string>afterOutput</string>
+	<key>outputFormat</key>
+	<string>snippet</string>
+	<key>outputLocation</key>
+	<string>replaceInput</string>
 	<key>scope</key>
 	<string>source.vhdl</string>
 	<key>uuid</key>
 	<string>27002B2B-A8A0-4E3A-A8B6-98186AFE3ADA</string>
+	<key>version</key>
+	<integer>2</integer>
 </dict>
 </plist>

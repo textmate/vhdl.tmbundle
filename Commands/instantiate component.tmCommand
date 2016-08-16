@@ -130,15 +130,23 @@ sub findcomponent {
 	<string>word</string>
 	<key>input</key>
 	<string>selection</string>
+	<key>inputFormat</key>
+	<string>text</string>
 	<key>keyEquivalent</key>
 	<string>@|</string>
 	<key>name</key>
-	<string>instantiate component</string>
-	<key>output</key>
-	<string>insertAsSnippet</string>
+	<string>Instantiate Component</string>
+	<key>outputCaret</key>
+	<string>afterOutput</string>
+	<key>outputFormat</key>
+	<string>snippet</string>
+	<key>outputLocation</key>
+	<string>replaceInput</string>
 	<key>scope</key>
 	<string>source.vhdl</string>
 	<key>uuid</key>
 	<string>6752C387-8CEC-48A0-9CA6-76EE51ED8701</string>
+	<key>version</key>
+	<integer>2</integer>
 </dict>
 </plist>
