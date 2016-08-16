@@ -1,8 +1,0 @@
-# VHDL Bundle Comments
-
-## Infininight (msheets) - 2008-11-13
-
-* "Symbol List - Process" scope is too broad.
-* All snippets should use actual tabs for indentation, they will be converted to the users preference automatically when inserted.
-
----
