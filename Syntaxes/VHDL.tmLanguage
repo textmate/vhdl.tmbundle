@@ -1178,6 +1178,14 @@
 					<array>
 						<dict>
 							<key>include</key>
+							<string>#function_definition_pattern</string>
+						</dict>
+						<dict>
+							<key>include</key>
+							<string>#procedure_definition_pattern</string>
+						</dict>
+						<dict>
+							<key>include</key>
 							<string>#control_patterns</string>
 						</dict>
 						<dict>
