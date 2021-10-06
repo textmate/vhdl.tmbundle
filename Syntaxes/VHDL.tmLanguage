@@ -33,19 +33,19 @@
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>(?x)
+					<string>(?ix)
 
 						# The word architecture $1
-						\b((?i:architecture))\s+
+						\b(architecture)\s+
 						
 						# Followed up by a valid $3 or invalid identifier $4
 						(([a-zA-z][a-zA-z0-9_]*)|(.+))(?=\s)\s+
 
 						# The word of $5
-						((?i:of))\s+
+						(of)\s+
 
 						# Followed by a valid $7 or invalid identifier $8
-						(([a-zA-Z][a-zA-Z0-9_]*)|(.+?))(?=\s*(?i:is))\b
+						(([a-zA-Z][a-zA-Z0-9_]*)|(.+?))(?=\s*(is))\b
 					</string>
 					<key>beginCaptures</key>
 					<dict>
@@ -81,15 +81,15 @@
 						</dict>
 					</dict>
 					<key>end</key>
-					<string>(?x)
+					<string>(?ix)
 						# The word end $1
-						\b((?i:end))
+						\b(end)
 
 						# Optional word architecture $3
-						(\s+((?i:architecture)))?
+						(\s+(architecture))?
 
 						# Optional same identifier $6 or illegal identifier $7
-						(\s+((\3)|(.+?)))?
+						(\s+(\3)|(.+?))?
 
 						# This will cause the previous to capture until just before the ; or $
 						(?=\s*;)
@@ -106,12 +106,12 @@
 							<key>name</key>
 							<string>storage.type.architecture.vhdl</string>
 						</dict>
-						<key>6</key>
+						<key>5</key>
 						<dict>
 							<key>name</key>
 							<string>entity.name.type.architecture.end.vhdl</string>
 						</dict>
-						<key>7</key>
+						<key>6</key>
 						<dict>
 							<key>name</key>
 							<string>invalid.illegal.mismatched.identifier.vhdl</string>
@@ -238,10 +238,7 @@
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>(?x)
-						# Beginning of line ...
-						^\s*
-
+					<string>(?ix)
 						# Optional identifier ... $3 or invalid identifier $4
 						(
 							(
@@ -252,7 +249,7 @@
 						)?
 
 						# The word case $5
-						\b((?i:case))\b
+						\b(case)\b
 					</string>
 					<key>beginCaptures</key>
 					<dict>
@@ -273,12 +270,12 @@
 						</dict>
 					</dict>
 					<key>end</key>
-					<string>(?x)
+					<string>(?ix)
 						# The word end $1
-						\b((?i:end))\s*
+						\b(end)\s*
 
 						# The word case $4 or invalid word $5
-						(\s+(((?i:case))|(.*?)))
+						(\s+((case)|(.*?)))
 
 						# Optional identifier from before $8 or illegal $9
 						(\s+((\2)|(.*?)))?
@@ -401,15 +398,15 @@
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>(?x)
-						# From the beginning of the line ...
-						^\s*
-
+					<string>(?ix)
 						# Match a valid identifier $1
 						([a-zA-Z][a-zA-Z0-9_]*)
 
 						# Colon! $2
 						\s*(:)\s*
+						
+						# Make sure it is not just a label for a loop of some type
+						(?!for|while|loop|if)
 
 						# Another valid identifier $3
 						([a-zA-Z][a-zA-Z0-9_]*)\b
@@ -468,18 +465,15 @@
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>(?x)
-						# From the beginning of the line ...
-						^\s*
-
+					<string>(?ix)
 						# The word component $1
-						\b((?i:component))\s+
+						\b(component)\s+
 
 						# A valid identifier $3 or invalid identifier $4
-						(([a-zA-Z_][a-zA-Z0-9_]*)\s*|(.+?))(?=\b(?i:is|port)\b|$|--)
+						(([a-zA-Z_][a-zA-Z0-9_]*)\s*|(.+?))(?=\b(is|port)\b|$|--)
 
 						# Optional word is $6
-						(\b((?i:is\b)))?
+						(\b(is\b))?
 					</string>
 					<key>beginCaptures</key>
 					<dict>
@@ -505,16 +499,16 @@
 						</dict>
 					</dict>
 					<key>end</key>
-					<string>(?x)
+					<string>(?ix)
 						# The word end $1
-						\b((?:end))\s+
+						\b(end)\s+
 
 						# The word component $3 or illegal word $4
-						(((?i:component\b))|(.+?))(?=\s*|;)
+						((component\b)|(.+?))(?=\s*|;)
 						
 						# Optional identifier $7 or illegal mismatched $8
 						(\s+((\3)|(.+?)))?(?=\s*;)
-					</string>
+						</string>
 					<key>endCaptures</key>
 					<dict>
 						<key>1</key>
@@ -575,7 +569,105 @@
 				</dict>
 				<dict>
 					<key>match</key>
-					<string>\b\d+#[0-9A-Fa-f_]+#</string>
+					<string>\b16#[0-9A-Fa-f_]+#</string>
+					<key>name</key>
+					<string>constant.numeric.integer.base_16_pound_number_pound.vhdl</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\b15#[0-9A-Ea-e_]+#</string>
+					<key>name</key>
+					<string>constant.numeric.integer.base_15_pound_number_pound.vhdl</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\b14#[0-9A-Da-d_]+#</string>
+					<key>name</key>
+					<string>constant.numeric.integer.base_14_pound_number_pound.vhdl</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\b13#[0-9A-Ca-c_]+#</string>
+					<key>name</key>
+					<string>constant.numeric.integer.base_13_pound_number_pound.vhdl</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\b12#[0-9A-Ba-b_]+#</string>
+					<key>name</key>
+					<string>constant.numeric.integer.base_12_pound_number_pound.vhdl</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\b11#[0-9Aa_]+#</string>
+					<key>name</key>
+					<string>constant.numeric.integer.base_11_pound_number_pound.vhdl</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\b10#[0-9_]+#</string>
+					<key>name</key>
+					<string>constant.numeric.base_10_pound_number_pound.vhdl</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\b9#[0-8_]+#</string>
+					<key>name</key>
+					<string>constant.numeric.base_9_pound_number_pound.vhdl</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\b8#[0-7_]+#</string>
+					<key>name</key>
+					<string>constant.numeric.base_8_pound_number_pound.vhdl</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\b7#[0-6_]+#</string>
+					<key>name</key>
+					<string>constant.numeric.base_7_pound_number_pound.vhdl</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\b6#[0-5_]+#</string>
+					<key>name</key>
+					<string>constant.numeric.base_6_pound_number_pound.vhdl</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\b5#[0-4_]+#</string>
+					<key>name</key>
+					<string>constant.numeric.base_5_pound_number_pound.vhdl</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\b4#[0-3_]+#</string>
+					<key>name</key>
+					<string>constant.numeric.base_4_pound_number_pound.vhdl</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\b3#[0-2_]+#</string>
+					<key>name</key>
+					<string>constant.numeric.base_3_pound_number_pound.vhdl</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\b2#[01_]+#</string>
+					<key>name</key>
+					<string>constant.numeric.base_2_pound_number_pound.vhdl</string>
+				</dict>
+				<dict>
+					<key>captures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>invalid.illegal.bad.number.vhdl</string>
+						</dict>
+					</dict>
+					<key>match</key>
+					<string>((\d+)?#.*?#)</string>
 					<key>name</key>
 					<string>constant.numeric.base_pound_number_pound.vhdl</string>
 				</dict>
@@ -643,7 +735,15 @@
 				</dict>
 				<dict>
 					<key>include</key>
+					<string>#loop_pattern</string>
+				</dict>
+				<dict>
+					<key>include</key>
 					<string>#while_pattern</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#wait_pattern</string>
 				</dict>
 			</array>
 		</dict>
@@ -653,10 +753,7 @@
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>(?x)
-						# From the beginning of the line
-						^\s*
-
+					<string>(?ix)
 						# Component identifier or illegal identifier $1
 						([a-zA-Z][a-zA-Z0-9_]*)
 
@@ -664,10 +761,10 @@
 						\s*(:)\s*
 
 						# Optional word use $4
-						(((?i:use))\s+)?
+						((use)\s+)?
 
 						# Required word entity $5
-						((?i:entity))\s+
+						(entity)\s+
 
 						# Optional library unit identifier $8 for invalid identifier $9 followed by a dot $10
 						(
@@ -679,7 +776,7 @@
 						(([a-zA-Z][a-zA-Z0-9_]*)|(.+?))
 
 						# Check to see if we are being followed by either open paren, end of line, or port or generic words
-						(?=\s*(\(|$|(?i:port|generic)))
+						(?=\s*(\(|$|(port|generic)))
 
 						# Optional architecture elaboration
 						(
@@ -793,12 +890,9 @@
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>(?x)
-						# From the beginning of the line ...
-						^\s*
-
+					<string>(?ix)
 						# The word entity $1
-						((?i:entity\b))\s+
+						(entity\b)\s+
 
 						# The identifier $3 or an invalid identifier $4
 						(([a-zA-Z][a-zA-Z\d_]*)|(.+?))(?=\s)
@@ -822,13 +916,13 @@
 						</dict>
 					</dict>
 					<key>end</key>
-					<string>(?x)
+					<string>(?ix)
 
 						# The word end $1
-						\b((?i:end\b))
+						\b(end\b)
 
 						# Optional word entity $3
-						(\s+((?i:entity)))?
+						(\s+(entity))?
 
 						# Optional identifier match $6 or indentifier mismatch $7
 						(\s+((\3)|(.+?)))?
@@ -889,9 +983,7 @@
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>(?x)
-						# From the beginning of the line
-						^\s*
+					<string>(?ix)
 						(
 							# Check for an identifier $2
 							([a-zA-Z][a-zA-Z0-9_]*)
@@ -900,15 +992,11 @@
 							\s*(:)\s*
 						)?
 
-						# Make sure the next word is not wait
-						(?!(?i:wait\s*))
-
 						# The for keyword $4
-						\b((?i:for))\b
+						\b(for)\b
 
 						# Make sure the next word is not all
-						(?!\s*(?i:all))
-
+						(?!\s*(all))
 					</string>
 					<key>beginCaptures</key>
 					<dict>
@@ -929,12 +1017,12 @@
 						</dict>
 					</dict>
 					<key>end</key>
-					<string>(?x)
+					<string>(?ix)
 						# The word end $1
-						\b((?i:end))\s+
+						\b(end)\s+
 						(
-							# Followed by generate or loop $3
-							 ((?i:generate|loop))
+							# Followed by loop or generate $3
+							 (loop|generate)
 
 							# But it really is required $4
 							|(\S+)
@@ -961,7 +1049,7 @@
 						<key>4</key>
 						<dict>
 							<key>name</key>
-							<string>invalid.illegal.loop.or.generate.required.vhdl</string>
+							<string>invalid.illegal.matched.loop.or.generate.required.vhdl</string>
 						</dict>
 						<key>7</key>
 						<dict>
@@ -980,23 +1068,7 @@
 					<array>
 						<dict>
 							<key>include</key>
-							<string>#control_patterns</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#entity_instantiation_pattern</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#component_pattern</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#component_instantiation_pattern</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#process_pattern</string>
+							<string>#loop_keyword</string>
 						</dict>
 						<dict>
 							<key>include</key>
@@ -1012,12 +1084,9 @@
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>(?x)
-						# From the beginning of the line
-						^\s*
-
+					<string>(?ix)
 						# The word function $1
-						((?i:function))\s+
+						(function)\s+
 
 						(
 							# A valid normal identifier $3
@@ -1026,7 +1095,7 @@
 							|("\S+")
 							# A valid backslash escaped identifier $5
 							|(\\.+\\)
-							# An invalid identifier $5
+							# An invalid identifier $6
 							|(.+?)
 						)
 
@@ -1034,7 +1103,7 @@
 						(?=\s*
 							(
 								 \(
-								|(?i:\breturn\b)
+								|(\breturn\b)
 							)
 						)
 					</string>
@@ -1067,15 +1136,12 @@
 						</dict>
 					</dict>
 					<key>end</key>
-					<string>(?x)
-						# From the beginning of the line
-						^\s*
-
+					<string>(?ix)
 						# The word end $1
-						((?i:end))
+						(end)
 
 						# Optional word function $3
-						(\s+((?i:function)))?
+						(\s+(function))?
 
 						# Optional matched identifier $6 or mismatched identifier $7
 						(\s+((\3|\4|\5)|(.+?)))?
@@ -1112,11 +1178,23 @@
 					<array>
 						<dict>
 							<key>include</key>
+							<string>#function_definition_pattern</string>
+						</dict>
+						<dict>
+							<key>include</key>
+							<string>#procedure_definition_pattern</string>
+						</dict>
+						<dict>
+							<key>include</key>
 							<string>#control_patterns</string>
 						</dict>
 						<dict>
 							<key>include</key>
 							<string>#parenthetical_list</string>
+						</dict>
+						<dict>
+							<key>include</key>
+							<string>#for_pattern</string>
 						</dict>
 						<dict>
 							<key>include</key>
@@ -1140,12 +1218,9 @@
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>(?x)
-						# From the beginning of the line
-						^\s*
-
+					<string>(?ix)
 						# The word function $1
-						((?i:function))\s+
+						(function)\s+
 
 						
 						(
@@ -1163,7 +1238,7 @@
 						(?=\s*
 							(
 								 \(
-								|(?i:\breturn\b)
+								|(\breturn\b)
 							)
 						)
 					</string>
@@ -1289,7 +1364,7 @@
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>(?x)
+					<string>(?ix)
 						(
 							# Optional identifier $2
 							([a-zA-Z][a-zA-Z0-9_]*)
@@ -1299,7 +1374,7 @@
 						)?
 
 						# Keyword if $4
-						\b((?i:if))\b
+						\b(if)\b
 					</string>
 					<key>beginCaptures</key>
 					<dict>
@@ -1320,14 +1395,14 @@
 						</dict>
 					</dict>
 					<key>end</key>
-					<string>(?x)
+					<string>(?ix)
 						# The word end $1
-						\b((?i:end))\s+
+						\b(end)\s+
 
 						(
 							(
 								# Optional generate or if keyword $4
-								 ((?i:generate|if))
+								 (generate|if)
 
 								# Keyword if or generate required $5
 								|(\S+)
@@ -1431,24 +1506,174 @@
 				</dict>
 			</array>
 		</dict>
+		<key>loop_keyword</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>begin</key>
+					<string>(?xi)(loop)</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.control.loop.vhdl</string>
+						</dict>
+					</dict>
+					<key>end</key>
+					<string>(?xi)(?=end)</string>
+					<key>name</key>
+					<string>meta.block.loop.start.vhdl</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>#wait_pattern</string>
+						</dict>
+						<dict>
+							<key>include</key>
+							<string>#control_patterns</string>
+						</dict>
+						<dict>
+							<key>include</key>
+							<string>#entity_instantiation_pattern</string>
+						</dict>
+						<dict>
+							<key>include</key>
+							<string>#component_pattern</string>
+						</dict>
+						<dict>
+							<key>include</key>
+							<string>#component_instantiation_pattern</string>
+						</dict>
+						<dict>
+							<key>include</key>
+							<string>#process_pattern</string>
+						</dict>
+						<dict>
+							<key>include</key>
+							<string>#cleanup</string>
+						</dict>
+					</array>
+				</dict>
+			</array>
+		</dict>
+		<key>loop_pattern</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>begin</key>
+					<string>(?ix)
+							(
+								# Check for an identifier $2
+								([a-zA-Z][a-zA-Z0-9_]*)
+					
+								# Followed by a colon $3
+								\s*(:)\s*
+							)?
+				
+							# The loop keyword $4
+							\b(loop)\b
+					</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>2</key>
+						<dict>
+							<key>name</key>
+							<string>entity.name.tag.loop.begin.vhdl</string>
+						</dict>
+						<key>3</key>
+						<dict>
+							<key>name</key>
+							<string>punctuation</string>
+						</dict>
+						<key>4</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.control.loop.vhdl</string>
+						</dict>
+					</dict>
+					<key>end</key>
+					<string>(?ix)
+							# The word end $3 followed by not loop $4, and possibly more $5
+							((\b(end)\s+(?!loop)(.+?))
+				
+							# Or end $7 followed by loop $8 and either identifier $10 or mismatch $11
+				
+							|(\b(end)\s+(loop)(\s+(\2)|(.+?))?))
+
+							# but definitely ending in a semicolon
+							(?=\s*;)
+					</string>
+					<key>endCaptures</key>
+					<dict>
+						<key>10</key>
+						<dict>
+							<key>name</key>
+							<string>invalid.illegal.mismatched.loop.identifier.vhdl</string>
+						</dict>
+						<key>3</key>
+						<dict>
+							<key>name</key>
+							<string>invalid.illegal.end.without.loop.vhd</string>
+						</dict>
+						<key>4</key>
+						<dict>
+							<key>name</key>
+							<string>invalid.illegal.loop.expected.vhdl</string>
+						</dict>
+						<key>6</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.control.end.vhdl</string>
+						</dict>
+						<key>7</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.control.loop.vhdl</string>
+						</dict>
+						<key>9</key>
+						<dict>
+							<key>name</key>
+							<string>entity.name.tag.loop.end.vhdl</string>
+						</dict>
+					</dict>
+					<key>name</key>
+					<string>meta.block.loop.vhdl</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>#control_patterns</string>
+						</dict>
+						<dict>
+							<key>include</key>
+							<string>#cleanup</string>
+						</dict>
+					</array>
+				</dict>
+			</array>
+		</dict>
 		<key>package_body_pattern</key>
 		<dict>
 			<key>patterns</key>
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>(?x)
+					<string>(?ix)
 						# The word package $1
-						\b((?i:package))\s+
+						\b(package)\s+
 
 						# ... but we want to be a package body $2
-						((?i:body))\s+
+						(body)\s+
 
 						# The valid identifier $4 or the invalid one $5
 						(([a-zA-Z][a-zA-Z\d_]*)|(.+?))\s+
 
 						# ... and we end it with an is $6
-						((?i:is))\b
+						(is)\b
 					</string>
 					<key>beginCaptures</key>
 					<dict>
@@ -1479,12 +1704,12 @@
 						</dict>
 					</dict>
 					<key>end</key>
-					<string>(?x)
+					<string>(?ix)
 						# The word end $1
-						\b((?i:end\b))
+						\b(end\b)
 
 						# Optional word package $3 body $4
-						(\s+((?i:package))\s+((?i:body)))?
+						(\s+(package)\s+(body))?
 
 						# Optional identifier $7 or mismatched identifier $8
 						(\s+((\4)|(.+?)))?(?=\s*;)</string>
@@ -1554,18 +1779,18 @@
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>(?x)
+					<string>(?ix)
 						# The word package $1
-						\b((?i:package))\s+
+						\b(package)\s+
 
 						# ... but we do not want to be a package body
-						(?!(?i:body))
+						(?!body)
 
 						# The valid identifier $3 or the invalid one $4
 						(([a-zA-Z][a-zA-Z\d_]*)|(.+?))\s+
 
 						# ... and we end it with an is $5
-						((?i:is))\b
+						(is)\b
 					</string>
 					<key>beginCaptures</key>
 					<dict>
@@ -1591,12 +1816,12 @@
 						</dict>
 					</dict>
 					<key>end</key>
-					<string>(?x)
+					<string>(?ix)
 						# The word end $1
-						\b((?i:end\b))
+						\b(end\b)
 
 						# Optional word package $3
-						(\s+((?i:package)))?
+						(\s+(package))?
 
 						# Optional identifier $6 or mismatched identifier $7
 						(\s+((\2)|(.+?)))?(?=\s*;)</string>
@@ -1809,12 +2034,9 @@
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>(?x)
-						# From the beginning of the line
-						^\s*
-
+					<string>(?ix)
 						# The word function $1
-						((?i:procedure))\s+
+						(procedure)\s+
 
 						(
 							# A valid normal identifier $3
@@ -1852,15 +2074,12 @@
 						</dict>
 					</dict>
 					<key>end</key>
-					<string>(?x)
-						# From the beginning of the line
-						^\s*
-
+					<string>(?ix)
 						# The word end $1
-						((?i:end))
+						(end)
 
 						# Optional word function $3
-						(\s+((?i:procedure)))?
+						(\s+(procedure))?
 
 						# Optional matched identifier $6 or mismatched identifier $7
 						(\s+((\3|\4)|(.+?)))?
@@ -1925,8 +2144,8 @@
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>(?x)
-						\b((?i:procedure))\s+
+					<string>(?ix)
+						\b(procedure)\s+
 						(([a-zA-Z][a-zA-Z0-9_]*)|(.+?))
 						(?=\s*(\(|;))
 					</string>
@@ -1976,10 +2195,7 @@
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>(?x)
-						# From the beginning of the line
-						^\s*
-
+					<string>(?ix)
 						(
 							# Optional identifier $2
 							([a-zA-Z][a-zA-Z0-9_]*)
@@ -1989,7 +2205,7 @@
 						)?
 
 						# The word process #4
-						((?i:process))
+						(process)
 					</string>
 					<key>beginCaptures</key>
 					<dict>
@@ -2010,12 +2226,12 @@
 						</dict>
 					</dict>
 					<key>end</key>
-					<string>(?x)
+					<string>(?ix)
 						# The word end $1
-						((?i:end))
+						(end)
 
 						# Optional word process $3
-						(\s+((?i:process)))
+						(\s+(process))
 
 						# Optional identifier $6 or invalid identifier $7
 						(\s+((\2)|(.+?)))?
@@ -2049,6 +2265,10 @@
 					<string>meta.block.process.vhdl</string>
 					<key>patterns</key>
 					<array>
+						<dict>
+							<key>include</key>
+							<string>#wait_pattern</string>
+						</dict>
 						<dict>
 							<key>include</key>
 							<string>#control_patterns</string>
@@ -2089,12 +2309,12 @@
 						</dict>
 					</dict>
 					<key>end</key>
-					<string>(?x)
+					<string>(?ix)
 						# The word end $1
-						\b((?i:end))
+						\b(end)
 
 						# The word record $2
-						\s+((?i:record))
+						\s+(record)
 
 						# Optional identifier $5 or invalid identifier $6
 						(\s+(([a-zA-Z][a-zA-Z\d_]*)|(.*?)))?
@@ -2213,15 +2433,15 @@
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>(?x)
+					<string>(?ix)
 						# The word subtype $1
-						\b((?i:subtype))\s+
+						\b(subtype)\s+
 
 						# Valid identifier $3 or invalid identifier $4
 						(([a-zA-Z][a-zA-Z0-9_]*)|(.+?))\s+
 
 						# The word is $5
-						((?i:is))\b
+						(is)\b
 					</string>
 					<key>beginCaptures</key>
 					<dict>
@@ -2402,9 +2622,9 @@
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>(?x)
+					<string>(?ix)
 						# The word type $1
-						\b((?i:type))\s+
+						\b(type)\s+
 
 						# Valid identifier $3 or invalid identifier $4
 						(([a-zA-Z][a-zA-Z0-9_]*)|(.+?))
@@ -2414,7 +2634,7 @@
 							 (?=\s*;)
 
 							# Or the word is comes up $7
-							|(\s+((?i:is)))
+							|(\s+(is))
 						)\b
 					</string>
 					<key>beginCaptures</key>
@@ -2466,25 +2686,25 @@
 				</dict>
 			</array>
 		</dict>
-		<key>while_pattern</key>
+		<key>wait_pattern</key>
 		<dict>
 			<key>patterns</key>
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>(?x)
-						# From the beginning of the line
-						^\s*
-						(
-							# Check for an identifier $2
-							([a-zA-Z][a-zA-Z0-9_]*)
-
-							# Followed by a colon $3
-							\s*(:)\s*
-						)?
-
-						# The for keyword $4
-						\b((?i:while))\b
+					<string>(?ix)
+							 # Optional identifier $2 with colon $3
+							 (
+								 ([a-zA-Z][a-zA-Z0-9_]*)
+								 
+								 \s*(:)
+							 )?
+							 
+							 # The wait keyword $4
+							 (wait)
+							 
+							 # Followed by either on $7, until $8, or for keyword $9 
+							 (\s+((on)|(until)|(for)))?
 					</string>
 					<key>beginCaptures</key>
 					<dict>
@@ -2501,16 +2721,81 @@
 						<key>4</key>
 						<dict>
 							<key>name</key>
+							<string>keyword.control.wait.vhdl</string>
+						</dict>
+						<key>7</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.control.on.vhdl</string>
+						</dict>
+						<key>8</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.control.until.vhdl</string>
+						</dict>
+						<key>9</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.control.for.vhdl</string>
+						</dict>
+					</dict>
+					<key>end</key>
+					<string>\s*(?=;)</string>
+					<key>name</key>
+					<string>meta.block.wait.vhdl</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>#cleanup</string>
+						</dict>
+					</array>
+				</dict>
+			</array>
+		</dict>
+		<key>while_pattern</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>begin</key>
+					<string>(?ix)
+						(
+							# Check for an identifier $2
+							([a-zA-Z][a-zA-Z0-9_]*)
+
+							# Followed by a colon $3
+							\s*(:)\s*
+						)?
+
+						# The for keyword $4
+						\b(while)\b
+					</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>2</key>
+						<dict>
+							<key>name</key>
+							<string>entity.name.tag.while.loop.vhdl</string>
+						</dict>
+						<key>3</key>
+						<dict>
+							<key>name</key>
+							<string>punctuation.separator.vhdl</string>
+						</dict>
+						<key>4</key>
+						<dict>
+							<key>name</key>
 							<string>keyword.control.while.vhdl</string>
 						</dict>
 					</dict>
 					<key>end</key>
-					<string>(?x)
+					<string>(?ix)
 						# The word end $1
-						\b((?i:end))\s+
+						\b(end)\s+
 						(
 							# Followed by keyword loop $3
-							 ((?i:loop))
+							 (loop)
 
 							# But it really is required $4
 							|(\S+)
@@ -2556,7 +2841,7 @@
 					<array>
 						<dict>
 							<key>include</key>
-							<string>#control_patterns</string>
+							<string>#loop_keyword</string>
 						</dict>
 						<dict>
 							<key>include</key>
